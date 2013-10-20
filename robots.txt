@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /customer/
+Disallow: /engine/
+Disallow: /files/
+Disallow: /module/
+Disallow: /temp/
+Disallow: /themes/
