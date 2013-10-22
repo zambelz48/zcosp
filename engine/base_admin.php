@@ -44,6 +44,7 @@ class Base_admin extends Z_Controller {
                     $this->view->display('footer.tpl');
                 }
                 
+                //logout
                 if($_GET['page'] == 'logout') {
                     session_destroy();
                     $_SESSION = array();
