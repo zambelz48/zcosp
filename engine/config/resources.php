@@ -9,10 +9,10 @@
  */
 
 //Production 
-//error_reporting(0);
+error_reporting(0);
 
 //Development
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 define('ZAMBELZ_VERSION', '0.1');
 
