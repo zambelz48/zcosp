@@ -21,9 +21,9 @@ class Base_admin extends Z_Controller {
     
     public function view() {        
         if(empty($_SESSION['user_type']) || $_SESSION['user_type'] != 'admin'){
-            if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
-                load_class(MODULE_PATH.'login'.DS, 'admin', 'login_admin');                
-            }                    
+            load_class(MODULE_PATH.'login'.DS, 'admin', 'login_admin');                    
+        } else if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
+            load_class(MODULE_PATH.'login'.DS, 'admin', 'login_admin');                
         } else {
             $this->view->assign('editor_path', '../engine/editor/tinymce/');
             $this->view->display('header.tpl');
@@ -33,25 +33,23 @@ class Base_admin extends Z_Controller {
                     load_class(MODULE_PATH.'home'.DS, 'admin', 'home_admin');
                 } else if($_GET['page'] == 'modules') {
                     load_class(MODULE_PATH.'modules'.DS, 'admin', 'modules_admin');
-                } else {
-                    //load semua module disini ...
-                    foreach($this->modules->get_all_module() as $module) {
-                        if($_GET['page'] == $module['module_name']) {
-                            load_class(MODULE_PATH.$module['module_name'].DS, 'admin', $module['module_name'].'_admin');
-                        }
-                    }
-                    
-                    $this->view->display('footer.tpl');
-                }
-                
-                //logout
-                if($_GET['page'] == 'logout') {
+                } else if($_GET['page'] == 'logout') {
                     session_destroy();
                     $_SESSION = array();
                     redirect('index.php');            
+                } else {
+                    //load semua module disini ...
+                    foreach($this->modules->get_all_module() as $module) {
+                        $mod = $module['module_name'];
+                        if($_GET['page'] == $mod) {                        
+                            load_class(MODULE_PATH.$mod.DS, 'admin', $mod.'_admin');
+                        } 
+                    }
                 }
-            }           
-        }       
+                          
+                $this->view->display('footer.tpl');
+            }            
+        }
     }    
 }
 

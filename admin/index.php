@@ -12,7 +12,6 @@ ob_start('ob_gzhandler');
 session_start();
         
 define('DS', DIRECTORY_SEPARATOR);
-
 define('ROOT_PATH', str_replace("\\", "/", realpath(dirname(dirname(__FILE__)))) . DS);
 
 if(file_exists(ROOT_PATH . 'engine' . DS . 'config' . DS . 'resources.php')) {    
