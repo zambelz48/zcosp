@@ -9,8 +9,12 @@
         <li class=" dropdown" id="menu-messages">
             <a href="index.php?page=messages">
                 <i class="icon icon-envelope"></i> 
-                <span class="text">Pesan</span> 
-                <span class="label label-important">5</span>
+                <span class="text">Pesan</span>
+
+                {if $total_messages > 0}
+                    <span class="label label-important">{$total_messages}</span>
+                {/if}
+
             </a>
         </li>
         <li class=""><a title="" href="index.php?page=logout"><i class="icon icon-share-alt"></i> <span class="text">Keluar</span></a></li>

@@ -26,14 +26,16 @@ class Base_site extends Z_Controller {
      **/ 
     public function view() {
         if(isset($_GET['page'])) {                      
-            foreach($this->modules->get_all_module() as $page) {
+            foreach($this->modules->get_rows() as $page) {
+                $mod = '';
+                
                 if($_GET['page'] == $page['module_name']) {
                     $mod = $page['module_name'];
                     
                     //header
                     //load semua konfigurasi meta_data disini ...
                     load_class(MODULE_PATH.$mod.DS, 'site', $mod.'_site', 'header_config');                        
-                    load_class(MODULE_PATH.'site_profile'.DS, 'site', 'site_profile_site', 'view_header');
+                    load_class(MODULE_PATH.'site_config'.DS, 'site', 'site_config_site', 'view_header');
                         
                     //content                    
                     load_class(MODULE_PATH.$mod.DS, 'site', $mod.'_site');
@@ -44,7 +46,7 @@ class Base_site extends Z_Controller {
         }
         
         //footer
-        load_class(MODULE_PATH.'site_profile'.DS, 'site', 'site_profile_site', 'view_footer');          
+        load_class(MODULE_PATH.'site_config'.DS, 'site', 'site_config_site', 'view_footer');
     }    
 }
 

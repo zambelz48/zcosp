@@ -18,5 +18,3 @@ class Menu_admin extends Z_Controller {
         
     }
 }
-
-?>

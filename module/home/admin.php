@@ -10,20 +10,8 @@
 
 class Home_admin extends Z_Controller {
     
-    /**
-     * Konstruktor
-     * @access public
-     **/     
     public function __construct() {
         parent::init('admin');
-    }
-    
-    public function total_order() {
-        
-    }
-    
-    public function best_seller() {
-        
     }
     
     public function view() {
@@ -32,5 +20,3 @@ class Home_admin extends Z_Controller {
     }
     
 }
-
-?>

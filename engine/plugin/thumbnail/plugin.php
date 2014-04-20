@@ -33,5 +33,3 @@ function img_upload($file_src, $dir, $file_name, $attr, $width = 165, $height = 
 	imagedestroy($img_src);
 	imagedestroy($img_thumb);
 }
-
-?>

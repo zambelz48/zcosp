@@ -7,33 +7,26 @@
  * @author Nanda . J . A
  * @copyright 2013
  */
-        
 
-class DB_Handler extends MySQL_Base {
+
+class DB_Handler extends Mysql {
     
     private static $instance = null;
-    private $db_name;
-    
-    private function __construct() {
-        require_once ENGINE_PATH . 'config' . DS . 'database.php';
-        $this->db_name = $db['db_name'];
-        return self::connect($db['host'], $db['user'], $db['password']);        
+
+    private function __construct($db_name, $host, $user, $password) {
+        parent::connection($host, $user, $password);
+        parent::select_db($db_name);
+        parent::connection_handler();
     }
     
-    public static function get_instance() {        
-        if(self::$instance == null) {            
-            self::$instance = new self();            
+    public static function connect($db_name, $host, $user, $password) {
+        if(self::$instance == null) {
+            self::$instance = new self($db_name, $host, $user, $password);
         } else {            
             die('cannot instantiate two times !');        
         }
         
         return self::$instance;        
-    }
-    
-    public function connect($host, $user, $password) {
-        parent::connect($host, $user, $password);
-        parent::select_db($this->db_name);
-        parent::connection_handler();        
     }
     
 }

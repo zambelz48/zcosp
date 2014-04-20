@@ -12,41 +12,38 @@ class Site_config_site extends Z_Controller {
     
     public function __construct() {
         parent::init('site');
+        $this->load->model('modules');
         $this->load->model('site_config');
-        $this->load->model('product_category', 'pcategory'); 
     }
     
     private function breadcrumb_link() {
-        $this->view->assign('breadcrumb', 'breadcrumb links appear here..');
+        if($_GET['page'] == '' || $_GET['page'] == 'home') {
+            $this->view->assign('breadcrumb', 'home.html');
+        } else {
+            foreach($this->modules->get_rows() as $page) {
+                if($_GET['page'] == $page['module_name']) {
+
+                    $page_name = ucfirst(str_replace('_', ' ', $page['module_name']));
+                    $page_name = ucfirst(str_replace(' page', '', $page_name));
+
+                    $this->view->assign('breadcrumb', $page_name);
+                }
+            }
+        }
     }
     
     public function view_header() {
-        $this->view->assign('up_menu', $this->pcategory->get_multilevel('0'));
-        
         $this->breadcrumb_link();
-        
-        if($_GET['page'] == '' || $_GET['page'] == 'home') {
-            $customer_side_menu = 0;
-        } else {
-            $customer_side_menu = 1;
-        }
-        
-        $this->view->assign('customer_side_menu', $customer_side_menu);
-        
         $this->view->display('header.tpl');
     }
     
     public function view_footer() {
-        $site = $this->site_config->base_config();
+        $site = $this->site_config->get_row();
         
         $this->view->assign('site_footer', $site['site_footer']);
         $this->view->display('footer.tpl');
     }
-    
-    public function view() {
-        
-    }
+
+    public function view() {}
     
 }
-
-?>

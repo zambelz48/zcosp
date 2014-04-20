@@ -16,15 +16,16 @@ class Themes_admin extends Z_Controller {
     }
     
     public function theme_list() {
-        $themes = $this->themes->get_all_theme();
-        
+        $data = $this->themes->get_rows();
+        $total_data = $this->themes->get_count();
+
         $thead = array( '<th style="width:20px">ID</th>', 
                         '<th>Nama tema</th>', 
                         '<th>Status</th>');
         
         parent::table_config(   'themes', 'daftar tema',
                                 'tambah', 'hapus',
-                                $thead, $themes);
+                                $thead, $data, $total_data);
     }
     
     public function set_active() {
@@ -42,6 +43,3 @@ class Themes_admin extends Z_Controller {
         }        
     }
 }
-
-
-?>

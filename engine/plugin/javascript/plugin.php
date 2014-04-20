@@ -13,5 +13,3 @@ function js_alert($message) {
     return '<script>window.alert("'.$message.'")</script>';
 
 }
-
-?>

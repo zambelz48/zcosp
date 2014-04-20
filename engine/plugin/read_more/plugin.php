@@ -8,25 +8,12 @@
  * @copyright 2013
  */
 
-function readmore($cnt) {    
+function readmore($cnt, $length = 400) {
     /*membuat paragraf pada isi article dan mengabaikan tag html*/
     $art_content = htmlentities(strip_tags($cnt));
     
     /*ambil sebanyak 400 karakter*/
-    $content     = substr($art_content,0,400); 
-	
-    /*potong per spasi kalimat*/
-    $content     = substr($art_content,0,strrpos($content,' ')); 
-    
-    return $content;
-}
-
-function readmore2($cnt) {    
-    /*membuat paragraf pada isi article dan mengabaikan tag html*/
-    $art_content = htmlentities(strip_tags($cnt));
-    
-    /*ambil sebanyak 150 karakter*/
-    $content     = substr($art_content,0,150); 
+    $content     = substr($art_content,0,$length);
 	
     /*potong per spasi kalimat*/
     $content     = substr($art_content,0,strrpos($content,' ')); 

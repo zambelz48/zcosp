@@ -39,6 +39,17 @@ if(!function_exists('base_link_format')) {
 }
 
 /**
+ * fungsi untuk mendapat tanggal dan jam system
+ */
+if(!function_exists('current_date_time')) {
+    
+    function current_date_time() {
+        return date('Y-m-d') .' '. date('H:i:s', time());
+    }
+    
+}
+
+/**
  * fungsi untuk mengalihkan halaman
  */
 if(!function_exists('redirect')) {
@@ -65,7 +76,7 @@ if(!function_exists('http_refresh')) {
  */
 if(!function_exists('load_class')) {
     
-    function load_class($path, $filename, $class_name = '', $method = 'view') {
+    function load_class($path, $filename, $class_name = '', $method = 'view', $params = '') {
         load_file($path.DS, $filename.'.php');
         
         if($class_name != '') {
@@ -84,9 +95,7 @@ if(!function_exists('load_class')) {
             die('<b>Error :</b> Method "'.$method.'" on class "'. $class_name .'" is not exists');
         }
                 
-        $class->$method();
+        $class->$method($params);
     }
     
 }
-
-?>

@@ -22,12 +22,12 @@ class Z_Controller {
      * @param Integer $cache_lifetime = smarty config
      * @access protected  
      */
-    protected function init($access, $module_name = '', $debug=false, $cache=false, $cache_lifetime=120) {
+    protected function init($access, $link = '', $debug=false, $cache=false, $cache_lifetime=120) {
         self::$instance = $this;        
         
         $this->load = new Z_Loader;
         
-        $this->base_link = base_link_format($module_name);
+        $this->base_link = base_link_format($link);
         
         load_file(ENGINE_PATH.'smarty'.DS.'libs'.DS, 'Smarty.class.php');
         
@@ -55,8 +55,56 @@ class Z_Controller {
         $this->view->debugging = $debug;
         $this->view->caching = $cache;
         $this->view->cache_lifetime = $cache_lifetime;
-        
+
+        $this->require_files($access);
+
         $this->view->assign('THEME_DIR', $name);
+    }
+
+    /**
+     * Include require files from system
+     */
+    private function require_files($access) {
+        if($access == 'admin') {
+            /* base js path */
+            $base_js_path = '../engine/js/';
+
+            /* base TinyMCE path */
+            $base_tiny_mce_path = '../engine/editor/tinymce/';
+        }
+
+        if($access == 'site') {
+            /* base js path */
+            $base_js_path = './engine/js/';
+
+            /* base TinyMCE path */
+            $base_tiny_mce_path = './engine/editor/tinymce/';
+        }
+
+        $jquery = '<script src="'.$base_js_path.'jquery/jquery.js"></script>';
+        $jquery_migrate = '<script src="'.$base_js_path.'jquery/jquery-migrate.js"></script>';
+        $jquery_files = $jquery ."\n\t". $jquery_migrate;
+
+
+        $tiny_mce = '<script type="text/javascript" src="'.$base_tiny_mce_path.'tinymce.gzip.js"></script>';
+        $tiny_mce_init = '<script type="text/javascript" src="'.$base_tiny_mce_path.'init.js"></script>';
+        $tiny_mce_files = $tiny_mce ."\n\t". $tiny_mce_init;
+
+        $jquery_form_validator = '<script src="'.$base_js_path.'form-validator/jquery.form-validator.min.js"></script>';
+        $jquery_form_validator_lang = '<script src="'.$base_js_path.'form-validator/languages/id.js"></script>';
+        $jquery_form_validator_files = $jquery_form_validator ."\n\t". $jquery_form_validator_lang;
+
+        /* base js path */
+        $this->view->assign('JS_PATH', $base_js_path);
+
+        /* load jQuery files */
+        $this->view->assign('JQUERY_FILES', $jquery_files);
+
+        /* load TinyMCE files */
+        $this->view->assign('TINY_MCE_FILES', $tiny_mce_files);
+
+        /* load jQuery Form Validator files */
+        $this->view->assign('JQUERY_FORM_VALIDATOR_FILES', $jquery_form_validator_files);
     }
     
     /**
@@ -80,29 +128,29 @@ class Z_Controller {
         $this->view->assign($var, $mod_folder.DS.$template.DS.$template.'.tpl');
     }
     
-    protected function table_config($table_content = '', $heading = '', $link_add_title = '', 
+    protected function table_config($module_name = '', $heading = '', $link_add_title = '',
                                     $link_delete_title = '',
                                     $thead = '', $tdata = '', $total_data = '') {
                                         
         $this->view->assign('heading',              strtoupper($heading));
-        $this->view->assign('link_add',             $this->base_link.$link_add.'&act=add');
+        $this->view->assign('link_add',             $this->base_link.'&act=add');
         $this->view->assign('link_add_title',       $link_add_title);
         $this->view->assign('link_delete_title',    $link_delete_title);
-        $this->view->assign('link_edit',            $this->base_link.$link_edit.'&act=edit&id=');        
+        $this->view->assign('link_edit',            $this->base_link.'&act=edit&id=');
         $this->view->assign('tb_head',              $thead);                                                
         $this->view->assign('tb_data',              $tdata);
         $this->view->assign('total_data',           $total_data);
-        
-        $this->assign_module('table_content', $table_content);        
+
+        $this->assign_module('table_content', $module_name);
         $this->fetch('table', 'component');
     }
     
     public function site_head_config($title = '', $meta_key = '', $meta_desc = '') {
-        $site = mysql_fetch_array(mysql_query('SELECT site_author, site_slogan FROM site_profile'));
+        $site = mysql_fetch_array(mysql_query('SELECT site_author, site_slogan FROM site_config'));
         
         $this->view->assign('site_author', $site['site_author']);
         $this->view->assign('site_slogan', $site['site_slogan']);       
-        $this->view->assign('site_title', strtoupper($title));
+        $this->view->assign('site_title', $title);
         $this->view->assign('site_meta_key', $meta_key);
         $this->view->assign('site_meta_desc', $meta_desc);
         
@@ -141,7 +189,7 @@ class Z_Controller {
      * @param String $access = 'site' atau 'admin'
      * @access private 
      */
-    private function theme_dir($param, $access) {        
+    private function theme_dir($param, $access) {
         switch($access) {
             case 'admin' :
                 $path = THEMES_ADMIN_PATH;    
@@ -158,7 +206,7 @@ class Z_Controller {
         
         $query = @mysql_query('SELECT theme_name FROM themes WHERE design="'.$access.'" AND is_active = "Y"');
         $theme = @mysql_fetch_array($query);
-        
+
         if(file_exists($path . $theme['theme_name'].DS.'header.tpl')) {
             if($param == 'site_theme_path') {
                 return $path . $theme['theme_name'].DS;                
@@ -172,5 +220,3 @@ class Z_Controller {
         }       
     }    
 }
-
-?>

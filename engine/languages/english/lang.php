@@ -8,20 +8,18 @@
  * @copyright 2013
  */
 
-define('TEXT_ERROR_CONNECTION',         'Connection failed');
+define('EXCEPTION_ERROR_CONNECTION',         'Connection failed');
 
-define('TEXT_ERROR_DATABASE',           'Database failed');
+define('EXCEPTION_ERROR_DATABASE',           'Database failed');
 
-define('TEXT_INVALID_SQL_TYPE',         'invalid sql type');
+define('EXCEPTION_INVALID_SQL_TYPE',         'invalid sql type');
 
-define('TEXT_ERROR_MODEL_EXISTS',       'has already defined');
+define('EXCEPTION_ERROR_MODEL_EXISTS',       'has already defined');
 
-define('TEXT_ERROR_MODEL_NOT_FOUND',    'not found');
+define('EXCEPTION_ERROR_MODEL_NOT_FOUND',    'not found');
 
-define('TEXT_ERROR_PLUGIN_EXISTS',      'has already defined');
+define('EXCEPTION_ERROR_PLUGIN_EXISTS',      'has already defined');
 
-define('TEXT_ERROR_PLUGIN_NOT_FOUND',   'not found');
+define('EXCEPTION_ERROR_PLUGIN_NOT_FOUND',   'not found');
 
-define('TEXT_FILE_NOT_FOUND',           'not found on');
-
-?>
+define('EXCEPTION_FILE_NOT_FOUND',           'not found on');

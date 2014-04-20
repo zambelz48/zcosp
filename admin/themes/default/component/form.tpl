@@ -36,37 +36,37 @@
                     <form enctype="multipart/form-data" class="form-horizontal" method="post" action="" name="basic_validate" id="basic_validate" novalidate="novalidate">
                     
                         {if $tabbed_content == 'yes'}
-                        <div class="widget-content tab-content">
-                            {foreach from=$tab_data item=tab}
-                            <div id="{$tab.tab_link}" class="tab-pane {$tab.tab_active}">                                
-                                <!--Start loop tab form data-->
-                                {foreach from=$tab.tab_data item=form}
-                                    <div class="control-group">
-                                        {if $form.input != ''}
-                                        <label class="control-label">{$form.label}</label>                                    
-                                        <div class="controls">
-                                            {$form.input}
+                            <div class="widget-content tab-content">
+                                {foreach from=$tab_data item=tab}
+                                <div id="{$tab.tab_link}" class="tab-pane {$tab.tab_active}">
+                                    <!--Start loop tab form data-->
+                                    {foreach from=$tab.tab_data item=form}
+                                        <div class="control-group">
+                                            {if $form.input != ''}
+                                                <label class="control-label">{$form.label}</label>
+                                                <div class="controls">
+                                                    {$form.input}
+                                                </div>
+                                            {else}
+                                                <label class="control-label-no-input">{$form.label}</label>
+                                            {/if}
                                         </div>
-                                        {else}
-                                        <label class="control-label-no-input">{$form.label}</label>
-                                        {/if}
-                                    </div>
-                                {/foreach}                        
-                                <!--End loop tab form data-->                                
+                                    {/foreach}
+                                    <!--End loop tab form data-->
+                                </div>
+                                {/foreach}
                             </div>
-                            {/foreach}
-                        </div>
                         {else}
                             <!--Start loop form data-->
                             {foreach from=$form_data item=form}
                                 <div class="control-group">
                                     {if $form.input != ''}
-                                    <label class="control-label">{$form.label}</label>                                    
-                                    <div class="controls">
-                                        {$form.input}
-                                    </div>
+                                        <label class="control-label">{$form.label}</label>
+                                        <div class="controls">
+                                            {$form.input}
+                                        </div>
                                     {else}
-                                    <label class="control-label">{$form.label}</label> 
+                                        <label class="control-label">{$form.label}</label>
                                     {/if}
                                 </div>
                             {/foreach}                        
@@ -81,20 +81,20 @@
                             <!--End loop button-->
                         </div>
                     
-                    <!--End form-->    
                     </form> 
+                    <!--End form-->
                     
-                <!--End widget-content nopadding-->    
                 </div>
+                <!--End widget-content nopadding-->
             
-            <!--End widget-box-->    
             </div>
+            <!--End widget-box-->
         
-        <!--End span12-->    
         </div>
+        <!--End span12-->
     
-    <!--End row-fluid-->    
     </div>
-
-<!--End container-fluid-->    
+    <!--End row-fluid-->
+    
 </div>
+<!--End container-fluid-->

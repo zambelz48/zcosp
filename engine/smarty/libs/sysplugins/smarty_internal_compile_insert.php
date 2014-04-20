@@ -3,7 +3,7 @@
 /**
  * Smarty Internal Plugin Compile Insert
  *
- * Compiles the {insert} tag
+ * Compiles the {sql_insert} tag
  *
  * @package Smarty
  * @subpackage Compiler
@@ -41,7 +41,7 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
     public $optional_attributes = array('_any');
 
     /**
-     * Compiles code for the {insert} tag
+     * Compiles code for the {sql_insert} tag
      *
      * @param array  $args     array with attributes from parser
      * @param object $compiler compiler object
@@ -111,7 +111,7 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
                 }
             }
         }
-        // delete {insert} standard attributes
+        // delete {sql_insert} standard attributes
         unset($_attr['name'], $_attr['assign'], $_attr['script'], $_attr['nocache']);
         // convert attributes into parameter array string
         $_paramsArray = array();
@@ -119,7 +119,7 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
             $_paramsArray[] = "'$_key' => $_value";
         }
         $_params = 'array(' . implode(", ", $_paramsArray) . ')';
-        // call insert
+        // call sql_insert
         if (isset($_assign)) {
             if ($_smarty_tpl->caching) {
                 $_output .= "echo Smarty_Internal_Nocache_Insert::compile ('{$_function}',{$_params}, \$_smarty_tpl, '{$_filepath}',{$_assign});?>";

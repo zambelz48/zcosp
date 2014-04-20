@@ -74,5 +74,3 @@ class Z_Table
         echo $print_table;
     }
 }
-
-?>

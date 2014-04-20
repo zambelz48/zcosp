@@ -9,27 +9,30 @@
  */
 
 class Modules_model extends Z_Model {
-    
+
     private $db_table = 'modules';
-    
-    public function get_all_module() {
-        parent::model('select');
-        
-        $this->db->select();
-        $this->db->table($this->db_table);
-        
-        $query = $this->db->build();
-        
-        while($module = $this->db->fetch_array($query)) {
-            $data[] = array('id'            => $module['id'], 
-                            'module_name'   => $module['module_name'],
-                            'total_size'    => $module['total_size'],
-                            'created'       => $module['created']);
+
+    public function get_rows() {
+        $result = '';
+
+        try {
+            $query = $this->db->select($this->db_table);
+
+            while($row = $this->db->fetch($query)) {
+                $result[] = array(
+                    'id'                => $row['id'],
+                    'module_name'       => $row['module_name'],
+                    'menu_admin_alias'  => $row['menu_admin_alias'],
+                    'menu_site_alias'   => $row['menu_site_alias'],
+                    'total_size'        => $row['total_size'],
+                    'created'           => $row['created']
+                );
+            }
+        } catch(Exception $e) {
+            $result = $e->getMessage();
         }
-        
-        return $data;
+
+        return $result;
     }
     
 }
-
-?>

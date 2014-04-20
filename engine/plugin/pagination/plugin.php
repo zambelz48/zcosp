@@ -8,8 +8,7 @@
  * @copyright 2013
  */
 
-class Paging
-{
+class Paging {
 	/*Fungsi Untuk Ngecek Halaman & Posisi Datanya*/
 	function GetPos($Limit)
 	{
@@ -84,5 +83,3 @@ class Paging
 		return $Link;
 	}
 }
-
-?>

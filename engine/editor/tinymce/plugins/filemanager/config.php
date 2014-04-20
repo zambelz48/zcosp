@@ -1,7 +1,10 @@
-<?php 
+<?php define('Z_KEY', 1);
+
 if($_SESSION["verify"] != "FileManager4TinyMCE") die('forbidden');
 
 $root = rtrim($_SERVER['DOCUMENT_ROOT'],'/'); // don't touch this configuration
+
+require_once '../../../../config/configuration.php';
 
 //**********************
 //Path configuration
@@ -16,9 +19,9 @@ $root = rtrim($_SERVER['DOCUMENT_ROOT'],'/'); // don't touch this configuration
 //   |    |   |    |-   |- filemanager
 //   |    |   |    |-   |-      |- thumbs <- folder of thumbs [must have the write permission]
 
-$base_url="http://localhost"; //url base of site if you want only relative url leave empty
-$upload_dir = '/zcosp/files/images/'; // path from base_url to upload base dir
-$current_path = '../../../../../files/images/'; // relative path from filemanager folder to upload files folder
+$base_url       = $conf['FM4TinyMCE']['base_url']; //url base of site if you want only relative url leave empty
+$upload_dir     = $conf['FM4TinyMCE']['upload_dir']; // path from base_url to upload base dir
+$current_path   = $conf['FM4TinyMCE']['files_path']; // relative path from filemanager folder to upload files folder
 
 $MaxSizeUpload=100; //Mb
 

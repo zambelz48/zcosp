@@ -16,15 +16,9 @@ class Modules_admin extends Z_Controller {
     }
     
     public function module_list() {
-        $module = $this->mod->get_all_module();
-        
-        $thead = array( '<th>Nama module</th>', 
-                        '<th>Ukuran</th>', 
-                        '<th>Tgl Install</th>');
-        
-        parent::table_config(   'modules', 'daftar modul',
-                                'tambah', 'hapus',
-                                $thead, $module);                                
+        $module = $this->mod->get_rows();
+        $thead  = array('<th>Nama module</th>', '<th>Ukuran</th>', '<th>Tgl Install</th>');
+        parent::table_config('modules', 'daftar modul', 'tambah', 'hapus', $thead, $module);
     }
     
     public function view() {
@@ -39,5 +33,3 @@ class Modules_admin extends Z_Controller {
     }
     
 }
-
-?>

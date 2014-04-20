@@ -11,20 +11,20 @@
 class Z_Model {
     
     protected $db;
+    protected $sp;
     
     /**
      * Menentukan tipe operasi model
-     * @param String $type = 'select', 'insert', 'update', 'delete', 'custom'  
+     * @param String $type = 'select', 'insert', 'update', 'delete', 'custom'
      * @access protected  
      */
-    protected function model($type) {        
-        if(!class_exists('SQL_Builder')) {
-            die('SQL_Builder class not found !');
+    public function __construct() {
+        $class_name = 'SqlCommands';
+        if(!class_exists($class_name)) {
+            die($class_name. ' class not found !');
+        } else {
+            $this->db = new SqlCommands();
         }
-        
-        $this->db = new SQL_Builder($type);      
     }
-    
-}
 
-?>
+}

@@ -47,7 +47,7 @@
     
     </div>
         
-    <script src="{$THEME_DIR}js/jquery.min.js"></script>  
+    {$JQUERY_FILES}
     <script src="{$THEME_DIR}js/login.js"></script>
     <script src="{$THEME_DIR}js/form_validation.js"></script> 
 

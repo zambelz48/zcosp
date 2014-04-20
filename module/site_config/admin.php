@@ -13,7 +13,6 @@ class Site_config_admin extends Z_Controller {
     public function __construct() {
         parent::init('admin');
         $this->load->model('site_config');
-        $this->load->model('product');        
     }
     
     private function radio_config($name = '', $on = '', $off = '') {
@@ -21,54 +20,68 @@ class Site_config_admin extends Z_Controller {
                 <label>'.html_input('radio', array('name="'.$name.'"', 'value="offline"', $off)).'Offline</label>';
     }
     
-     
-    
-    private function site_data( $id, $date_updated, $site_name, $site_author,
-                                $site_slogan, $site_footer, $site_status,
-                                $offline_message, $site_meta_desc, $site_meta_key) {
+    private function site_data($values = '') {
         return array(
-            array('label' => 'Terakhir Di update',  'input' => html_input('text', array('value="'.$date_updated.'"', 'disabled')).html_input('hidden', array('name="id"', 'value="'.$id.'"'))),  
-            array('label' => 'Nama website',        'input' => html_input('text', array('name="site_name"', 'id="site_name"', 'value="'.$site_name.'"', 'class="span3"'))),
-            array('label' => 'Nama pemilik',        'input' => html_input('text', array('name="site_author"', 'value="'.$site_author.'"', 'class="span3"'))), 
-            array('label' => 'Slogan',              'input' => html_input('text', array('name="site_slogan"', 'value="'.$site_slogan.'"', 'class="span6"'))), 
-            array('label' => 'Teks footer',         'input' => html_input('text', array('name="site_footer"', 'value="'.$site_footer.'"', 'class="span6"'))),
-            array('label' => 'Status',              'input' => $site_status),
-            array('label' => 'Pesan Offline',       'input' => html_textarea(array('name="offline_message"', 'class="span6"'), $offline_message)),
-            array('label' => 'Meta Description',    'input' => html_textarea(array('name="site_meta_desc"', 'class="span6"'), $site_meta_desc)),
-            array('label' => 'Meta Keywords',       'input' => html_textarea(array('name="site_meta_key"', 'class="span6"'), $site_meta_key))
+            array(  'label' => 'Terakhir Di update',
+                    'input' => html_input('text', array('value="'.$values[0].'"', 'disabled'))
+                              .html_input('hidden', array('name="id"', 'value="'.$values[1].'"'))),
+
+            array(  'label' => 'Nama website',
+                    'input' => html_input('text', array('name="site_name"', 'id="site_name"', 'value="'.$values[2].'"', 'class="span3"'))),
+
+            array(  'label' => 'Nama pemilik',
+                    'input' => html_input('text', array('name="site_author"', 'value="'.$values[3].'"', 'class="span3"'))),
+
+            array(  'label' => 'Slogan',
+                    'input' => html_input('text', array('name="site_slogan"', 'value="'.$values[4].'"', 'class="span6"'))),
+
+            array(  'label' => 'Teks footer',
+                    'input' => html_input('text', array('name="site_footer"', 'value="'.$values[5].'"', 'class="span6"'))),
+
+            array(  'label' => 'Status',
+                    'input' => $values[6]),
+
+            array(  'label' => 'Pesan Offline',
+                    'input' => html_textarea(array('name="offline_message"', 'class="span6"'), $values[7])),
+
+            array(  'label' => 'Meta Description',
+                    'input' => html_textarea(array('name="site_meta_desc"', 'class="span6"'), $values[8])),
+
+            array(  'label' => 'Meta Keywords',
+                    'input' => html_textarea(array('name="site_meta_key"', 'class="span6"'), $values[9]))
+        );
+    }
+
+    private function other_conf($values = '') {
+        return array(
+            array(  'label' => 'Email forwarder',
+                    'input' => html_input('text', array('name="'.$values[0].'"',
+                                                        'id="'.$values[0].'"',
+                                                        'value="'.$values[0].'"',
+                                                        'class="span3"')))
         );
     }
     
-    private function profile_data($profile = '') {
-        return array(
-            array('label' => 'No.Telp/Hp',  'input' => html_input('text', array('value="'.$date_updated.'"'))),
-            array('label' => 'Email',       'input' => html_input('text', array('value="'.$date_updated.'"'))),
-            array('label' => 'facebook',    'input' => html_input('text', array('value="'.$date_updated.'"'))),
-            array('label' => 'Twitter',     'input' => html_input('text', array('value="'.$date_updated.'"'))),
-            array('label' => 'Profile',     'input' => html_textarea(array('name="profile"', 'id="tinymce_editor"'), $profile))            
-        );
-    }
-    
-    private function form_data($form_title, $site_data, $profile) {
+    private function form($form_title, $form_data) {
         $tab_data = array(
-            array(  'tab_active'        => 'active',   
-                    'tab_link'          => 'site-config', 
-                    'tab_title'         => 'Data Website', 
-                    'tab_data'          => $site_data),
-                    
-            array(  'tab_link'          => 'profile-config', 
-                    'tab_title'         => 'Profile Website', 
-                    'tab_data'          => $profile)
+            array(  'tab_active'        => 'active',
+                    'tab_link'          => 'main-config',
+                    'tab_title'         => 'Website',
+                    'tab_data'          => $form_data[0]),
+
+            array(  'tab_link'          => 'other-config',
+                    'tab_title'         => 'Other',
+                    'tab_data'          => $form_data[1])
         );
-        
-        $button = array(html_input('submit', array('value="Simpan"', 'class="btn btn-success"')));
+
+        $button = array(html_input('submit', array('value="Simpan"', 'class="btn btn-inverse"')));
         parent::form_config('yes', $tab_data, '', $form_title, $button);
     }
     
     private function site_config() {
         if($_POST) {            
             if(!empty($_POST['site_name'])) {
-                $site = $this->site_config->update_config($_POST['id']);
+                $site = $this->site_config->update($_POST['id']);
                 
                 if($site) {
                     parent::alert('success', 'Berhasil !', 'Data konfigurasi website berhasil disimpan !');
@@ -78,22 +91,31 @@ class Site_config_admin extends Z_Controller {
             }                                   
         }
         
-        $conf = $this->site_config->base_config();
+        $row = $this->site_config->get_row();
         
-        if($conf['site_status'] == 'online') {
+        if($row['site_status'] == 'online') {
             $site_status = $this->radio_config('site_status', 'checked');            
         } else {            
             $site_status = $this->radio_config('site_status', '', 'checked');
         }
-        
-        $site_data = $this->site_data(  $conf['id'], $conf['date_updated'], $conf['site_name'], 
-                                        $conf['site_author'], $conf['site_slogan'], $conf['site_footer'],
-                                        $site_status, $conf['offline_message'], $conf['site_meta_desc'],
-                                        $conf['site_meta_key']);
-        
-        $profile = $this->profile_data();
-                                        
-        $this->form_data('Konfigurasi website', $site_data, $profile);        
+
+        $values_site_conf = array(  $row['date_updated'],
+                                    $row['id'],
+                                    $row['site_name'],
+                                    $row['site_author'],
+                                    $row['site_slogan'],
+                                    $row['site_footer'],
+                                    $site_status,
+                                    $row['offline_message'],
+                                    $row['site_meta_desc'],
+                                    $row['site_meta_key']);
+
+        $values_other_conf = array();
+
+        $site_data = $this->site_data($values_site_conf);
+        $other_conf = $this->other_conf($values_other_conf);
+
+        $this->form('Konfigurasi website', array($site_data, $other_conf));
     }
     
     public function view() {
@@ -101,5 +123,3 @@ class Site_config_admin extends Z_Controller {
     }
     
 }
-
-?>

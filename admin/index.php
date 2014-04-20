@@ -14,10 +14,25 @@ session_start();
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT_PATH', str_replace("\\", "/", realpath(dirname(dirname(__FILE__)))) . DS);
 
-if(file_exists(ROOT_PATH . 'engine' . DS . 'config' . DS . 'resources.php')) {    
-    require_once ROOT_PATH . 'engine' . DS . 'config' . DS . 'resources.php';     
+// configuration file
+if(file_exists(ROOT_PATH.'engine'.DS.'config'.DS.'configuration.php')) {
+    require_once ROOT_PATH.'engine'.DS.'config'.DS.'configuration.php';
 } else {
-    die('path file not found on system !');
+    die('"configuration" file not found on system !');
+}
+
+// languages file
+if(file_exists(ROOT_PATH.'engine'.DS.'languages'.DS.trim(strtolower($conf['lang']['backend'])).DS.'lang.php')) {
+    require_once ROOT_PATH.'engine'.DS.'languages'.DS.trim(strtolower($conf['lang']['backend'])).DS.'lang.php';
+} else {
+    die('"languages" file not found on system !');
+}
+
+// resources file
+if(file_exists(ROOT_PATH.'engine'.DS.'config'.DS.'resources.php')) {
+    require_once ROOT_PATH.'engine'.DS.'config'.DS.'resources.php';
+} else {
+    die('"resources" file not found on system !');
 }
 
 /*===========================================================================================*/
@@ -26,4 +41,3 @@ if(file_exists(ROOT_PATH . 'engine' . DS . 'config' . DS . 'resources.php')) {
 load_class(ENGINE_PATH, 'base_admin');
 
 ob_end_flush();
-?>

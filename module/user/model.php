@@ -9,70 +9,50 @@
  */
 
 class User_model extends Z_Model {
-    
+
     private $db_table = 'administrator';
-    
-    public function get_all_user($mode = '') {
-        parent::model('select');
-        
-        $this->db->select();
-        $this->db->table($this->db_table);
-        $this->db->where('id != "'.$_SESSION['id'].'"');
-        
-        $query = $this->db->build();
-        
-        if($mode == 'total_data') {
-            return $this->db->num_rows($query);
-        } else if($mode == 'all_records') {
-            $no = 0;        
-            while($user = $this->db->fetch_array($query)) {
-                $data[] = array('no'            => $no,
-                                'id'            => $user['id'],
-                                'username'      => $user['username'],
-                                'im_type'       => $user['im_type'],
-                                'im_id'         => $user['im_id'],
-                                'user_active'   => $user['user_active'],
-                                'im_active'     => $user['im_active'],
-                                'user_type'     => $user['user_type'],
-                                'reg_date'      => $user['reg_date'],
-                                'last_update'   => $user['last_update'],
-                                'last_login'    => $user['last_login']);
-                                
+
+    public function get_rows() {
+        $result = '';
+
+        try {
+            $query = $this->db->select($this->db_table, null, 'id != "'.$_SESSION['id'] .'"');
+            $no = 0;
+
+            while($row = $this->db->fetch($query)) {
+                $result[] = array(
+                    'no'            => $no,
+                    'id'            => $row['id'],
+                    'username'      => $row['username'],
+                    'im_type'       => $row['im_type'],
+                    'im_id'         => $row['im_id'],
+                    'user_active'   => $row['user_active'],
+                    'im_active'     => $row['im_active'],
+                    'user_type'     => $row['user_type'],
+                    'reg_date'      => $row['reg_date'],
+                    'last_update'   => $row['last_update'],
+                    'last_login'    => $row['last_login']
+                );
                 $no++;
             }
-            
-            return $data;
+        } catch(Exception $e) {
+            $result = $e->getMessage();
         }
+
+        return $result;
     }
-    
-    public function total_user() {
-        parent::model('select');
-        
-        $this->db->select();
-        $this->db->table($this->db_table);
-        $this->db->where('id != "'.$_SESSION['id'].'"');
-        
-        $query = $this->db->build();
-        
-        return $this->db->num_rows($query);
+
+    public function get_count() {
+        $query = $this->db->select($this->db_table, null, 'id != '.$_SESSION['id']);
+        return $this->db->getCount($query);
     }
-    
+
     public function get_user($id) {
-        parent::model('select');
-        
-        $this->db->select();
-        $this->db->table($this->db_table);
-        $this->db->where('id = "'.$id.'"');
-        
-        $query = $this->db->build();
-        
-        return $this->db->fetch_array($query);
+        $query = $this->db->select($this->db_table, null, 'id='.$id);
+        return $this->db->fetch($query);
     }
     
     public function save_user() {
-        parent::model('insert');
-        
-        $date = date("Y-m-d") .' '. date("H:i:s", time());        
         $values = array('username'      => $_POST['username'], 
                         'password'      => md5($_POST['password']), 
                         'im_type'       => $_POST['im_type'], 
@@ -80,45 +60,27 @@ class User_model extends Z_Model {
                         'user_active'   => $_POST['user_active'], 
                         'im_active'     => $_POST['im_active'],
                         'user_type'     => '1', 
-                        'reg_date'      => $date, 
+                        'reg_date'      => current_date_time(),
                         'last_update'   => '0000-00-00 00:00:00', 
                         'last_login'    => '0000-00-00 00:00:00');
         
-        $this->db->table($this->db_table);
-        $this->db->insert($values);
-        
-        return $this->db->build();       
+        return $this->db->insert($this->db_table, $values);
     }
     
     public function update_user($id) {
-        parent::model('update');
-        
-        $date = date("Y-m-d") .' '. date("H:i:s", time());
         $values = array('username'      => $_POST['username'],
                         'password'      => md5($_POST['password']),
                         'im_type'       => $_POST['im_type'],
                         'im_id'         => $_POST['im_id'],
                         'user_active'   => $_POST['user_active'],
                         'im_active'     => $_POST['im_active'],
-                        'last_update'   => $date);
+                        'last_update'   => current_date_time());
         
-        $this->db->table($this->db_table);
-        $this->db->update($values);
-        $this->db->where('id = "'.$id.'"');
-        
-        return $this->db->build();
+        return $this->db->update($this->db_table, $values, 'id='.$id);
     }
     
     public function delete_user($id) {
-        parent::model('delete');
-        
-        $this->db->table($this->db_table);
-        $this->db->where('id = "'.$id.'"');
-        
-        return $this->db->build();
+       return $this->db->delete($this->db_table, 'id='.$id);
     }
     
 }
-
-
-?>

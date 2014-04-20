@@ -31,5 +31,3 @@ function date_id($tgl) {
     
 	return $date_id;
 }
-
-?>

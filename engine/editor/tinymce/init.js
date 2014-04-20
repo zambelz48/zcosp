@@ -1,7 +1,8 @@
 tinymce.init({
-    mode : "exact",
+    selector : "textarea.tinymce_editor",
     theme: "modern",
-    elements : "tinymce_editor",
+    relative_urls: false,
+    remove_script_host: false,
     plugins: [
         "advlist autolink lists link image charmap print preview hr anchor pagebreak",
         "searchreplace wordcount visualblocks visualchars code fullscreen",

@@ -34,5 +34,3 @@ class Z_Loader {
         $z->$object = new $class;
     }
 }
-
-?>

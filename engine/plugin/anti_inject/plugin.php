@@ -8,9 +8,7 @@
  * @copyright 2013
  */
 
-function anti_inject($data)
+function esc_string($data)
 {
 	return mysql_real_escape_string(stripslashes(strip_tags(htmlspecialchars($data, ENT_QUOTES))));
 }
-
-?>

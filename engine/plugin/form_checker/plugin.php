@@ -8,8 +8,7 @@
  * @copyright 2013
  */
           
-function FormChecker($data = array())
-{
+function FormChecker($data = array()) {
     $script = '<script language="javascript">
                     function checker(form){';
     
@@ -26,5 +25,3 @@ function FormChecker($data = array())
     
     return $script;
 }
-
-?>

@@ -28,7 +28,7 @@ Version 4.0.1 (2013-06-26)
 	Fixed so ctrl+shift+z works as an alternative redo shortcut to match a common Mac OS X shortcut.
 	Fixed so it's not possible to drag/drop in images in Gecko by default when paste plugin is enabled.
 	Fixed so format menu item texts gets translated using the specified language pack.
-	Fixed so the image dialog title is the same as the insert/edit image button text.
+	Fixed so the image dialog title is the same as the sql_insert/edit image button text.
 	Fixed so paste as plain text produces BR:s in PRE block and when forced_root_block is disabled.
 Version 4.0 (2013-06-13)
 	Added new insertdate_dateformat, insertdate_timeformat and insertdate_formats options to insertdatetime.

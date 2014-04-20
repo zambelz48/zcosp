@@ -8,20 +8,18 @@
  * @copyright 2013
  */
 
-define('TEXT_ERROR_CONNECTION',         'Koneksi gagal');
+define('EXCEPTION_ERROR_CONNECTION',         'Koneksi gagal');
 
-define('TEXT_ERROR_DATABASE',           'Basis data gagal');
+define('EXCEPTION_ERROR_DATABASE',           'Basis data gagal');
 
-define('TEXT_INVALID_SQL_TYPE',         'tipe sql salah');
+define('EXCEPTION_INVALID_SQL_TYPE',         'tipe sql salah');
 
-define('TEXT_ERROR_MODEL_EXISTS',       'sudah di sertakan');
+define('EXCEPTION_ERROR_MODEL_EXISTS',       'sudah di sertakan');
 
-define('TEXT_ERROR_MODEL_NOT_FOUND',    'tidak ditemukan');
+define('EXCEPTION_ERROR_MODEL_NOT_FOUND',    'tidak ditemukan');
 
-define('TEXT_ERROR_PLUGIN_EXISTS',      'sudah di sertakan');
+define('EXCEPTION_ERROR_PLUGIN_EXISTS',      'sudah di sertakan');
 
-define('TEXT_ERROR_PLUGIN_NOT_FOUND',   'tidak ditemukan');
+define('EXCEPTION_ERROR_PLUGIN_NOT_FOUND',   'tidak ditemukan');
 
-define('TEXT_FILE_NOT_FOUND',           'tidak ditemukan pada'); 
-
-?>
+define('EXCEPTION_FILE_NOT_FOUND',           'tidak ditemukan pada');

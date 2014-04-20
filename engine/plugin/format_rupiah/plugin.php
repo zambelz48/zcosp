@@ -17,5 +17,3 @@ function format_rupiah($angka) {
     }
 
 }
-
-?>

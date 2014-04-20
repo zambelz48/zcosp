@@ -12,57 +12,48 @@ class Themes_model extends Z_Model {
     
     private $db_table = 'themes';
     
-    public function get_all_theme() {        
-        parent::model('select');
-        
-        $this->db->select();
-        $this->db->table($this->db_table);
-        
-        $query = $this->db->build();
-        
-        while($themes = $this->db->fetch_array($query)) {
-            if($themes['is_active'] == 'Y') {
-                $themes_status = 'Aktif';
-            } else {
-                $themes_status = 'Non-aktif';
+    public function get_rows() {
+        $result = '';
+
+        try {
+            $query = $this->db->select($this->db_table);
+
+            while($row = $this->db->fetch($query)) {
+                $result[] = array(
+                    'id'           => $row['id'],
+                    'theme_name'   => $row['theme_name'],
+                    'design'       => $row['design'],
+                    'is_active'    => $row['is_active'],
+                    'created'      => $row['created'],
+                    'updated'      => $row['updated']
+                );
             }
-                
-            $data[] = array('id'            => $themes['id'],
-                            'theme_name'    => $themes['theme_name'],
-                            'design'        => $themes['design'],
-                            'is_active'     => $themes_status,
-                            'created'       => $themes['created'],
-                            'updated'       => $themes['updated']);
+        } catch(Exception $e) {
+            $result = $e->getMessage();
         }
-        
-        return $data;
+
+        return $result;
     }
-    
-    public function set_active_theme($id) {        
-        parent::model('update');
-        
-        $this->db->table($this->db_table);
-        $this->db->update('');
-        $this->db->where('id');
+
+    public function get_count() {
+        $query = $this->db->select($this->db_table);
+        return $this->db->getCount($query);
+    }
+
+    public function set_active_theme($id) {
+
     }
     
     public function set_inactive_theme($id) {        
-        parent::model('update');
-        
-        $this->db->update();
+
     }
     
     public function remove_theme($id) {        
-        parent::model('delete');
-        
+
     }
     
     public function install_theme() {        
-        parent::model('insert');
-        
+
     }
     
 }
-
-
-?>

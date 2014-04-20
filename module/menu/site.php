@@ -18,5 +18,3 @@ class Menu_site extends Z_Controller {
         
     }
 }
-
-?>

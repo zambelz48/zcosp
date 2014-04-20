@@ -99,5 +99,3 @@ function html_select($name = '', $default = '', $value = array()) {
     
     return $data;
 }
-
-?>

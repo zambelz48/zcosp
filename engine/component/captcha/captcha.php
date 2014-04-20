@@ -28,5 +28,3 @@ imagepng($CaptchaImg);
 
 /*kalau sudah selesai, hapus gambar captchanya*/
 imagedestroy($CaptchaImg);
-
-?>

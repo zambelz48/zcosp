@@ -18,5 +18,3 @@ class Themes_site extends Z_Controller {
         
     }
 }
-
-?>

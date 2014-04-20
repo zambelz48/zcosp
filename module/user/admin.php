@@ -16,22 +16,22 @@ class User_admin extends Z_Controller {
     }
     
     private function user_list() {
-        $user = $this->user->get_all_user('all_records');
-        $total_user = $this->user->get_all_user('total_data');
-        
+        $data = $this->user->get_rows();
+        $total_data = $this->user->get_count();
+
         $this->delete_user();
         
-        $thead = array( '<th style="width:20px">ID</th>', 
-                        '<th>Username</th>',
-                        '<th>Status user</th>',
-                        '<th>Status IM</th>', 
-                        '<th>Tgl dibuat</th>',
-                        '<th>Tgl diupdate</th>',
-                        '<th>Terakhir login</th>');
+        $thead = array(
+            '<th style="width:20px">ID</th>',
+            '<th>Username</th>',
+            '<th>Status user</th>',
+            '<th>Status IM</th>',
+            '<th>Tgl dibuat</th>',
+            '<th>Tgl diupdate</th>',
+            '<th>Terakhir login</th>'
+        );
         
-        parent::table_config(   'user', 'daftar user',
-                                'Tambah', 'Hapus',                                
-                                $thead, $user, $total_user);
+        parent::table_config('user', 'daftar user', 'Tambah', 'Hapus', $thead, $data, $total_data);
     }
     
     private function delete_user() {
@@ -70,8 +70,9 @@ class User_admin extends Z_Controller {
         );       
     }
     
-    private function form_data($form_title, $form_data) {
-        $button = array(html_input('submit', array('value="Simpan"', 'class="btn btn-success"')));
+    private function form($form_title, $form_data) {
+        $button = array(html_input('submit', array('value="Simpan"', 'class="btn btn-inverse"')),
+                        html_input('button', array('value="Kembali"', 'onclick="history.go(-1);"', 'class="btn btn-inverse"')));
         parent::form_config('', '', $form_data, $form_title, $button);
     }
     
@@ -103,7 +104,7 @@ class User_admin extends Z_Controller {
         $im_active = $this->radio_config('im_active', '', 'checked');        
         $user_data = $this->user_data('', $this->im_choice(), '', $user_active, $im_active);
         
-        $this->form_data('Data user baru', $user_data);
+        $this->form('Data user baru', $user_data);
     }
     
     private function edit_user($type = '') {
@@ -118,7 +119,7 @@ class User_admin extends Z_Controller {
         $user = $this->user->get_user($id_user);
         
         if($_POST) {
-            $this->saving('update', $user['id']);                     
+            $this->saving('update', $user['id']);
         }       
         
         if($user['user_active'] == 'Y') {
@@ -135,7 +136,7 @@ class User_admin extends Z_Controller {
                
         $user_data = $this->user_data($user['username'], $this->im_choice(), '', $user_active, $im_active);
         
-        $this->form_data($title, $user_data);
+        $this->form($title, $user_data);
     }
     
     public function view() {
@@ -159,5 +160,3 @@ class User_admin extends Z_Controller {
     }
     
 }
-
-?>

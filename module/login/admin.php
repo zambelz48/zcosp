@@ -22,13 +22,23 @@ class Login_admin extends Z_Controller {
             }else if(empty($_POST['password'])){
                 parent::alert('error', 'Error', 'Kolom password kosong !');   
             }else {
-                $username = anti_inject($_POST['username']);
-                $password = anti_inject(md5($_POST['password']));
-                $page = 'index.php?page=home';
-                $msg_not_found = 'User tidak terdaftar !';
-                
-                $this->view->assign('user_not_found', $msg_not_found);
-                $this->login->user_login('admin', $username, $password, $page, $msg_not_found);    
+                $username = esc_string($_POST['username']);
+                $password = esc_string(md5($_POST['password']));
+                $login = $this->login->user_login('admin', $username, $password);
+
+                switch($login) {
+                    case 0 :
+                        parent::alert('error', 'Error', 'User tidak ditemukan !');
+                        break;
+                    case 1 :
+                        redirect('index.php?page=home');
+                        break;
+                    case 2 :
+                        parent::alert('error', 'Error', 'Terjadi kesalahan ! <br />'. mysql_errno());
+                        break;
+                    default :
+                        break;
+                }
             }        
         }
         
@@ -36,5 +46,3 @@ class Login_admin extends Z_Controller {
     }
     
 }
-
-?>
