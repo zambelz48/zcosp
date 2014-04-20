@@ -4,20 +4,5 @@ RewriteEngine on
 
 RewriteRule ^home\.html$ index.php?page=home [L]
 
-RewriteRule ^all-product\.html$ index.php?page=product [L]
-RewriteRule ^product-category-(.*)\.html$ index.php?page=product_category&id=$1 [L]
-RewriteRule ^product-(.*)\.html$ index.php?page=product&act=detail&id=$1 [L]
-
-RewriteRule ^customer\.html$ index.php?page=customer [L]
-RewriteRule ^customer-login\.html$ index.php?page=customer&act=login [L]
-RewriteRule ^customer-logout\.html$ index.php?page=customer&act=logout [L]
-RewriteRule ^customer-register\.html$ index.php?page=customer&act=register [L]
-RewriteRule ^customer-checkout\.html$ index.php?page=customer&act=checkout [L]
-RewriteRule ^customer-cart\.html$ index.php?page=order [L]
-
-RewriteRule ^about-us\.html$ index.php?page=page&view=about-us [L]
-RewriteRule ^privacy-policy\.html$ index.php?page=page&view=privacy-policy [L]
-RewriteRule ^contact-us\.html$ index.php?page=page&view=contact-us [L]
-
 Options All -Indexes
 </IfModule>
